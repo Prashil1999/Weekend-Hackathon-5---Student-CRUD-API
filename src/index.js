@@ -36,7 +36,7 @@ app.post("/api/student",(req,res)=>{
     }
     let student={id:++count,...req.body};
     students.push(student);
-    res.send(student);
+    res.send(count);
 });
 
 app.put("/api/student",(req,res)=>{
@@ -54,19 +54,23 @@ app.put("/api/student",(req,res)=>{
         return;
     }
     students[studentIndex]={...students[studentIndex],name:req.body.name};
-    res.send(students[studentIndex]);
+    res.send(studentIndex);
 });
 
 app.delete("/api/student",(req,res)=>{
     let id=req.body.id;
+    if(isNaN(parseInt(id))){
+        res.sendStatus(400);
+        return;
+    }
     let studentIndex=students.findIndex((student)=>{return student.id===parseInt(id)});
     if(studentIndex===-1){
-        res.sendStatus(400);
+        res.sendStatus(404);
         return;
     }
     let student=students[studentIndex];
     students.splice(studentIndex,1);
-    res.send(student);
+    res.send(studentIndex);
 
 });
 
