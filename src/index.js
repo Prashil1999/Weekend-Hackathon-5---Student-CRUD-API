@@ -34,7 +34,7 @@ app.post("/api/student",(req,res)=>{
         res.sendStatus(400);
         return;
     }
-    let student={id:++count,...req.body};
+    let student={...req.body,id:++count};
     students.push(student);
     res.send(student);
 });
@@ -45,7 +45,7 @@ app.put("/api/student/:id",(req,res)=>{
     let keys=Object.keys(req.body);
     let isValid=true;
     for(let i=0;i<keys.length;i++){
-        if(!"id name currentClass division".includes(keys[i])){
+        if(!"name currentClass division".includes(keys[i])){
             isValid=false;
         }
     }
@@ -53,7 +53,7 @@ app.put("/api/student/:id",(req,res)=>{
         res.sendStatus(400);
         return;
     }
-    students[studentIndex]={...students[studentIndex],name:req.body.name};
+    students[studentIndex]={...req.body,id:students[studentIndex].id};
     res.send(students[studentIndex]);
 });
 
