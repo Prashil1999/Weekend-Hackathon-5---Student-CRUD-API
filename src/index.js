@@ -54,7 +54,7 @@ app.put("/api/student/:id",(req,res)=>{
         return;
     }
     students[studentIndex]={...students[studentIndex],...req.body,id:students[studentIndex].id,currentClass:Number(req.body.currentClass)};
-    res.send(students[studentIndex].name);
+    res.send({name:students[studentIndex].name});
 });
 
 app.delete("/api/student/:id",(req,res)=>{
