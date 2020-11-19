@@ -49,12 +49,32 @@ app.put("/api/student/:id",(req,res)=>{
             isValid=false;
         }
     }
+
+
     if(studentIndex===-1 || !isValid || !req.body.name){
         res.sendStatus(400);
         return;
+    }else if(req.body.name){
+        if(req.body.name.length === 0){
+            res.status(400).send();
+            return; 
+        }
     }
-    students[studentIndex]={...students[studentIndex],...req.body,id:students[studentIndex].id,currentClass:Number(req.body.currentClass)};
-    res.send({name:students[studentIndex].name});
+    else if(req.body.currentClass){
+        if(!Number.isInteger(req.body.currentClass)){
+            res.status(400).send();
+            return; 
+        }
+    }
+    else if(req.body.division){
+        if(!req.body.division.length === 1 || !req.body.division.match(/[A-Z]/)){
+            res.status(400).send();
+            return; 
+        }
+    }
+
+    students[studentIndex]={...students[studentIndex],...req.body,currentClass:Number(req.body.currentClass)};
+    res.send(students[studentIndex].name);
 });
 
 app.delete("/api/student/:id",(req,res)=>{
