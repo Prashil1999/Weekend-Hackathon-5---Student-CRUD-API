@@ -34,9 +34,9 @@ app.post("/api/student",(req,res)=>{
         res.sendStatus(400);
         return;
     }
-    let student={...req.body,id:++count};
+    let student={...req.body,id:++count,currentClass:parseInt(req.body.currentClass)};
     students.push(student);
-    res.send(student);
+    res.send({id:student.id});
 });
 
 app.put("/api/student/:id",(req,res)=>{
@@ -53,8 +53,8 @@ app.put("/api/student/:id",(req,res)=>{
         res.sendStatus(400);
         return;
     }
-    students[studentIndex]={...req.body,id:students[studentIndex].id};
-    res.send(students[studentIndex]);
+    students[studentIndex]={...students[studentIndex],...req.body,id:students[studentIndex].id,currentClass:Number(req.body.currentClass)};
+    res.send(students[studentIndex].name);
 });
 
 app.delete("/api/student/:id",(req,res)=>{
