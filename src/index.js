@@ -73,8 +73,9 @@ app.put("/api/student/:id",(req,res)=>{
         }
     }
 
-    students[studentIndex]={...students[studentIndex],...req.body,currentClass:Number(req.body.currentClass)};
-    res.send(students[studentIndex].name);
+    let student={...students[studentIndex],...req.body,currentClass:parseInt(req.body.currentClass)};
+    students.splice(studentIndex,1,student);
+    res.send(student.name);
 });
 
 app.delete("/api/student/:id",(req,res)=>{
